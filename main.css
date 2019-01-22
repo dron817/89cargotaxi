@@ -25,35 +25,6 @@ a, a:hover{
 #container{
 	width: 580px;
 }
-.notifications{
-	z-index: 90;
-	position:fixed;
-	top: 0px;
-	left: 30px;
-	text-align:center;
-	width: 230px;
-	vertical-align: baseline;
-}
-.notification{
-	color:#4f4737;
-	position:relative;
-	border: 1px solid;
-	border-color:#e9ab25;
-	text-align:center;
-	height: 25px;
-	width: 200px;
-	cursor: pointer;
-	margin-top:20px;
-	padding: 10px;
-	padding-top: 15px;
-	background-color:rgba(255,221,65,0.8);
-	border-radius: 10px;
-	vertical-align: middle;
-}
-.notification:hover{
-	background-color:rgba(233,171,37,0.7);
-
-}
 .info-page{
 	padding-bottom:30px;
 	padding-left:20px;
@@ -305,7 +276,6 @@ strong{
 	background-image: none;
 	padding-right: 20px;
 }
-
 .nav li:last-child:hover{
 	background: url(img/opacity-10.png);
 }
@@ -455,7 +425,7 @@ slider_count_3 .slider__number-after
 .biglink{
 	font: 18pt/25pt Arial Unicode MS, sans-serif;	
 }
-.reg-auth_block{
+.auth-form{
 	margin-top:15px;
 	height:190px;
 	width: 270px;
@@ -480,10 +450,10 @@ slider_count_3 .slider__number-after
 	color: #333;
 }
 .auth-form-reg-link{
+	position:absolute;
 	font: 12pt/15pt Arial Unicode MS, sans-serif;
-	margin-top: 25px;
-	margin-left: 15px;
-	float: left;
+	padding-top:24px;
+	padding-left:70px;
 }
 .authpass{
 	font: 12pt/15pt Arial Unicode MS, sans-serif;
@@ -592,26 +562,6 @@ border-right: none;
 .table_lk td {
 padding: 5px 5px;
 background: #ffc154;
-}
-#statusBlue{
-padding: 5px 5px;
-background: #babaff;
-}
-#statusOrange{
-padding: 5px 5px;
-background: #ffc154;
-}
-#statusYellow{
-padding: 5px 5px;
-background: #ffe154;
-}
-#statusGreen{
-padding: 5px 5px;
-background: #cfe134;
-}
-#statusRed{
-padding: 5px 5px;
-background: #ffa033;
 }
 .table_lk tr:last-child td:first-child {
 border-radius: 0 0 0 10px;

@@ -2,6 +2,8 @@
 function __autoload($class_name) {
 	$filename = strtolower($class_name) . '.php';
 	$file = site_path . 'classes' . DIRSEP . $filename;	
+	//print_r(realpath(dirname(__FILE__));
+	//$file = 'http:'. DIRSEP . DIRSEP .'89cargotaxi.mcdir.ru'. DIRSEP .'classes'. DIRSEP .'registry.php';
 	if (file_exists($file) == false) {
 			return false;
 	}
@@ -10,12 +12,15 @@ function __autoload($class_name) {
 
 	
 error_reporting (E_ALL);
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 // Константы:
 define ('DIRSEP', DIRECTORY_SEPARATOR);
 // Узнаём путь до файлов сайта
-$site_path = realpath(dirname(__FILE__) . DIRSEP . '..' . DIRSEP) . DIRSEP.'89cargotaxi.ru'. DIRSEP; //TODO при переезде возможны ошибки с 'www'
+$site_path = realpath(dirname(__FILE__) . DIRSEP . '..' . DIRSEP) . DIRSEP . 'httpdocs' . DIRSEP; //TODO при переезде возможны ошибки с 'www'
+//print_r($site_path);
 define ('site_path', $site_path);
-
 # Создаём регистратуру
 $registry = new Registry;
 $registry->set ('site_path', $site_path);
