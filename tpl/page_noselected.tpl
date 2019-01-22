@@ -1,0 +1,1 @@
+ <a href="?route=%section%/page/%n_page%#fast" class="pagination_noslected">%n_page%</a> 

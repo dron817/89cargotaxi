@@ -1,0 +1,1 @@
+<a href='%vk_link%' target="_blank" class='vkico'></a>

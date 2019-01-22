@@ -1,0 +1,1 @@
+<input class="short_price" name="price" type="text" id="%id%" value="%price%" onchange="inputPrice(%id%);"/>

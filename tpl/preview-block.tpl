@@ -1,0 +1,1 @@
+<iframe class="news-block" width="520" height="190" src="https://www.youtube.com/embed/hEjVLF_-iEI?list=PL0_0CkR5Zh9vFyjkVHBTigVYFKJ-_35AK" frameborder="0" allowfullscreen></iframe>

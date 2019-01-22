@@ -1,0 +1,27 @@
+[21-Nov-2016 12:07:38 UTC] PHP Warning:  mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 12:07:38 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/ih281281/public_html/classes/db.php on line 11
+[21-Nov-2016 12:07:38 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Invalid controller path: `home/ih281281/www/controllers/`' in /home/ih281281/public_html/classes/router.php:15
+Stack trace:
+#0 /home/ih281281/public_html/index.php(80): Router->setPath('/home/ih281281/...')
+#1 {main}
+  thrown in /home/ih281281/public_html/classes/router.php on line 15
+[21-Nov-2016 12:07:38 UTC] PHP Warning:  mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 12:07:38 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/ih281281/public_html/classes/db.php on line 11
+[21-Nov-2016 12:07:38 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Invalid controller path: `home/ih281281/www/controllers/`' in /home/ih281281/public_html/classes/router.php:15
+Stack trace:
+#0 /home/ih281281/public_html/index.php(80): Router->setPath('/home/ih281281/...')
+#1 {main}
+  thrown in /home/ih281281/public_html/classes/router.php on line 15
+[21-Nov-2016 12:07:39 UTC] PHP Warning:  mysqli::mysqli(): (28000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 12:07:39 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/ih281281/public_html/classes/db.php on line 11
+[21-Nov-2016 12:07:39 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message 'Invalid controller path: `home/ih281281/www/controllers/`' in /home/ih281281/public_html/classes/router.php:15
+Stack trace:
+#0 /home/ih281281/public_html/index.php(80): Router->setPath('/home/ih281281/...')
+#1 {main}
+  thrown in /home/ih281281/public_html/classes/router.php on line 15
+[21-Nov-2016 12:07:46 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 12:07:53 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 12:07:54 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 14:55:15 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 14:55:17 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10
+[21-Nov-2016 14:57:43 UTC] PHP Fatal error:  Class 'mysqli' not found in /home/ih281281/public_html/classes/db.php on line 10

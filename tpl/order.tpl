@@ -1,0 +1,23 @@
+					<tr>
+						<td>
+							%n%
+						</td>
+						<td>
+							%date%
+						</td>
+						<td>
+							%way%
+						</td>
+						<td>
+							%weight%
+						</td>
+						<td>
+							%price%
+						</td>
+						<td>
+							%status%
+						</td>
+						<td>
+							<a href="?route=lk/order/%n%">О заказе</a>
+						</td>
+					</a></tr>
