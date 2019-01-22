@@ -1,0 +1,90 @@
+<?php
+function __autoload($class_name) {
+	$filename = strtolower($class_name) . '.php';
+	$file = site_path . 'classes' . DIRSEP . $filename;	
+	if (file_exists($file) == false) {
+			return false;
+	}
+	include ($file);
+}
+
+	
+error_reporting (E_ALL);
+// Константы:
+define ('DIRSEP', DIRECTORY_SEPARATOR);
+// Узнаём путь до файлов сайта
+$site_path = realpath(dirname(__FILE__) . DIRSEP . '..' . DIRSEP) . DIRSEP.'89cargotaxi.ru'. DIRSEP; //TODO при переезде возможны ошибки с 'www'
+define ('site_path', $site_path);
+
+# Создаём регистратуру
+$registry = new Registry;
+$registry->set ('site_path', $site_path);
+# Соединяемся с БД
+$db = new db($registry);
+$registry->set ('db', $db);
+# Загружаем контроллер таблицы пользователей
+$users = new users($registry);
+$registry->set ('users', $users);
+# Загружаем контроллер таблицы заказов
+$orders = new orders($registry);
+$registry->set ('orders', $orders);
+# Загружаем контроллер таблицы callback'ов
+$callback = new callback($registry);
+$registry->set ('callback', $callback);
+# Создаём объект шаблонов
+$template = new Template($registry);
+$registry->set ('template', $template);
+# Загружаем контроллер отправки почты
+$email = new email($registry, $registry['admin_mail']);
+$registry->set ('email', $email);
+//functions
+session_start();
+
+if (isset($_POST["reg"])){
+	$manage = new Manege ($registry);
+	$r = $manage->regUser();
+	$manage->redirect($r);
+}
+elseif (isset($_POST["editUser"])){
+	$manage = new Manege ($registry);
+	$r = $manage->editUser();
+	$manage->redirect($r);
+}
+elseif (isset($_POST["auth"])){
+	$manage = new Manege ($registry);
+	$r = $manage->login();
+	$manage->redirect($r);
+}
+elseif (isset($_GET["logout"])){
+	$manage = new Manege ($registry);
+	$r = $manage->logout();
+	$manage->redirect($r);
+}
+elseif (isset($_GET["deleteUser"])){
+	$manage = new Manege ($registry);
+	$r = $manage->deleteUser($_GET["deleteUser"]);
+	$manage->redirect($r);
+}
+elseif (isset($_POST["order"])){
+	$manage = new Manege ($registry);
+	$r = $manage->order();
+	$manage->redirect($r);
+}
+elseif (isset($_POST["forgetpass"])){
+	$manage = new Manege ($registry);
+	$r = $manage->forgetpass();
+	$manage->redirect($r);
+}
+elseif (isset($_POST["callback"])||isset($_GET["callback"])){
+	$manage = new Manege ($registry);
+	$r = $manage->callback();
+	$manage->redirect($r);
+}
+
+
+# Загружаем router
+$router = new Router($registry);
+$registry->set ('router', $router);
+$router->setPath (site_path . 'controllers');
+$router->delegate();
+?>
