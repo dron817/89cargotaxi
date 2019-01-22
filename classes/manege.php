@@ -27,41 +27,28 @@ class Manege{
 	}
 
 	public function regUser(){
-		if(isset($_POST['g-recaptcha-response']) && $_POST['g-recaptcha-response']) {
-			$secret = '6Lc_SQ0UAAAAABalnexPS4VvVE-yA4HV-p5zSzM-';
-			$ip = $_SERVER['REMOTE_ADDR'];
-			$response = $_POST['g-recaptcha-response'];
-			$rsp = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response&remoteip=$ip");
-			$arr = json_decode($rsp, TRUE);
-			if($arr['success']){
-				$user['login'] = $this->data["login"];
-				$user['FIO'] = $this->data["FIO"];
-				$user['phone'] = $this->data["phone"];
-				$user['second_phone'] = (empty($this->data["second-phone"]))?'':$this->data["second-phone"];
-				$user['organization'] = (empty($this->data["organization"]))?'':$this->data["organization"];
-				$user['country'] = $this->data["country"];
-				$user['region'] = $this->data["region"];
-				$user['city'] = $this->data["city"];
-				$user['adress'] = $this->data["adress"];
-				$user['index'] = $this->data["index"];
-				$user['password'] = $this->hashPassword($this->data["password"]);
-				$user['regdate'] = time();
-				if (!($this->users->loginExists($user['login'])))
-					return $this->returnMessege("EXISTS_LOGIN", $this->registry['adress'].$this->registry['reg_link']);
-				
-				$result = $this->users->addUser($user);
-				if ($result){
-					$this->registry['email']->reg($user['login'], $this->data["password"]);
-					return $this->returnPageMessege("SUCCRESS_REG", $this->registry['adress'].$this->registry['msg_link']);
-				}
-				else
-					return $this->unknownError($this->registry['adress'].$this->registry['reg_link']);
-			}
+		$user['login'] = $this->data["login"];
+		$user['FIO'] = $this->data["FIO"];
+		$user['phone'] = $this->data["phone"];
+		$user['second_phone'] = (empty($this->data["second-phone"]))?'':$this->data["second-phone"];
+		$user['organization'] = (empty($this->data["organization"]))?'':$this->data["organization"];
+		$user['country'] = $this->data["country"];
+		$user['region'] = $this->data["region"];
+		$user['city'] = $this->data["city"];
+		$user['adress'] = $this->data["adress"];
+		$user['index'] = $this->data["index"];
+		$user['password'] = $this->hashPassword($this->data["password"]);
+		$user['regdate'] = time();
+		if (!($this->users->loginExists($user['login'])))
+			return $this->returnMessege("EXISTS_LOGIN", $this->registry['adress'].$this->registry['reg_link']);
+		
+		$result = $this->users->addUser($user);
+		if ($result){
+			$this->registry['email']->reg($user['login'], $this->data["password"]);
+			return $this->returnPageMessege("SUCCRESS_REG", $this->registry['adress'].$this->registry['msg_link']);
 		}
-		else {
-			$_SESSION['no_capcha']=1;
-			return $this->unknownError($this->registry['adress'].$this->registry['order_link']);
-		}
+		else
+			return $this->unknownError($this->registry['adress'].$this->registry['reg_link']);
 	}
 	
 	public function autoRegUser($login, $FIO, $phone, $country, $region, $city, $adress, $index, $second_phone, $organization){
@@ -137,84 +124,71 @@ class Manege{
 	}
 
 	public function order(){
-		if(isset($_POST['g-recaptcha-response']) && $_POST['g-recaptcha-response']) {
-			$secret = '6Lc_SQ0UAAAAABalnexPS4VvVE-yA4HV-p5zSzM-';
-			$ip = $_SERVER['REMOTE_ADDR'];
-			$response = $_POST['g-recaptcha-response'];
-			$rsp = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response&remoteip=$ip");
-			$arr = json_decode($rsp, TRUE);
-			if($arr['success']){
-				$order['type'] = $this->data["type"];
-				$order['pay'] = $this->data["pay"];
-				
-				$order['email'] = $this->data["email"];
-				$order['FIO'] = $this->data["FIO"];
-				$order['phone'] = $this->data["phone"];
-				$order['second_phone'] = (empty($this->data["second_phone"]))?'':$this->data["second_phone"];
-				$order['organization'] = (empty($this->data["organization"]))?'':$this->data["organization"];
-				$order['country'] = $this->data["country"];
-				$order['region'] = $this->data["region"];
-				$order['city'] = $this->data["city"];
-				$order['adress'] = $this->data["adress"];
-				$order['index'] = $this->data["index"];
-				$order['note'] = (empty($this->data["note"]))?'':$this->data["note"];
-				
-				$order['email2'] = $this->data["email2"];
-				$order['FIO2'] = $this->data["FIO2"];
-				$order['phone2'] = $this->data["phone2"];
-				$order['second_phone2'] = (empty($this->data["second_phone2"]))?'':$this->data["second_phone2"];
-				$order['organization2'] = (empty($this->data["organization2"]))?'':$this->data["organization2"];
-				$order['country2'] = $this->data["country2"];
-				$order['region2'] = $this->data["region2"];
-				$order['city2'] = $this->data["city2"];
-				$order['adress2'] = $this->data["adress2"];
-				$order['index2'] = $this->data["index2"];
-				$order['note2'] = (empty($this->data["note2"]))?'':$this->data["note2"];
-				
-				$order['places'] = (empty($this->data["places"]))?'':$this->data["places"];
-				$order['weight'] = $this->data["weight"];
-				$order['description'] = (empty($this->data["description"]))?'':$this->data["description"];
-				$order['orderdate'] = time();
-				$order['status'] = '1';
-				$order['payed'] = $this->data["price"];
-				
-				if (!empty($_SESSION["id"])){  //Если авторизован
-					$order['autor'] = $_SESSION["id"];
-					$email = $this->users->getLoginOnId($_SESSION["id"]);
-				}
-				else if (!$this->users->loginExists($this->data["email"])){  //Если не авторизован, но такой логин уже имеется
-					$order['autor'] = $this->users->getIdOnLogin($this->data["email"]);
-					$email = $this->data["email"];
-				}
-				else{  //Если такой логин встречается впервые
-					$_SESSION["auto_pass"] = $this->autoRegUser($order['email'], $order['FIO'], $order['phone'], $order['country'], $order['region'], $order['city'], $order['adress'], $order['index'], $order['second_phone'], $order['organization2']);
-					$_SESSION["auto_login"] = $this->data["email"];
-					$order['autor'] = $this->users->getIdOnLogin($this->data["email"]);
-					$result = $this->orders->addOrder($order);
-					if ($result){
-						$_SESSION['order']=$this->orders->getLastId();
-						$this->registry['email']->orderReg($_SESSION["auto_login"], $_SESSION["auto_pass"], $_SESSION['order'], $order);
-						return $this->returnPageMessege("SUCCRESS_ORDER_AND_REG", $this->registry['adress'].$this->registry['msg_link']);
-					}
-					else{
-						return $this->unknownError($this->registry['adress'].$this->registry['order_link']);
-					}
-				}  
-				// для зарегистрированных продолжаем по старой схеме
-				$result = $this->orders->addOrder($order);
-				if ($result){
-					$_SESSION['order']=$this->orders->getLastId();
-					$this->registry['email']->order($email, $_SESSION['order'], $order);
-					return $this->returnPageMessege("SUCCRESS_ORDER", $this->registry['adress'].$this->registry['msg_link']);
-				}
-				else
-					return $this->unknownError($this->registry['adress'].$this->registry['reg_link']);
+		$order['type'] = $this->data["type"];
+		$order['pay'] = $this->data["pay"];
+		
+		$order['email'] = $this->data["email"];
+		$order['FIO'] = $this->data["FIO"];
+		$order['phone'] = $this->data["phone"];
+		$order['second_phone'] = (empty($this->data["second_phone"]))?'':$this->data["second_phone"];
+		$order['organization'] = (empty($this->data["organization"]))?'':$this->data["organization"];
+		$order['country'] = $this->data["country"];
+		$order['region'] = $this->data["region"];
+		$order['city'] = $this->data["city"];
+		$order['adress'] = $this->data["adress"];
+		$order['index'] = $this->data["index"];
+		$order['note'] = (empty($this->data["note"]))?'':$this->data["note"];
+		
+		$order['email2'] = $this->data["email2"];
+		$order['FIO2'] = $this->data["FIO2"];
+		$order['phone2'] = $this->data["phone2"];
+		$order['second_phone2'] = (empty($this->data["second_phone2"]))?'':$this->data["second_phone2"];
+		$order['organization2'] = (empty($this->data["organization2"]))?'':$this->data["organization2"];
+		$order['country2'] = $this->data["country2"];
+		$order['region2'] = $this->data["region2"];
+		$order['city2'] = $this->data["city2"];
+		$order['adress2'] = $this->data["adress2"];
+		$order['index2'] = $this->data["index2"];
+		$order['note2'] = (empty($this->data["note2"]))?'':$this->data["note2"];
+		
+		$order['places'] = (empty($this->data["places"]))?'':$this->data["places"];
+		$order['weight'] = $this->data["weight"];
+		$order['description'] = (empty($this->data["description"]))?'':$this->data["description"];
+		$order['orderdate'] = time();
+		$order['status'] = '1';
+		$order['payed'] = $this->data["price"];
+		
+		if (!empty($_SESSION["id"])){  //Если авторизован
+			$order['autor'] = $_SESSION["id"];
+			$email = $this->users->getLoginOnId($_SESSION["id"]);
+		}
+		else if (!$this->users->loginExists($this->data["email"])){  //Если не авторизован, но такой логин уже имеется
+			$order['autor'] = $this->users->getIdOnLogin($this->data["email"]);
+			$email = $this->data["email"];
+		}
+		else{  //Если такой логин встречается впервые
+			$_SESSION["auto_pass"] = $this->autoRegUser($order['email'], $order['FIO'], $order['phone'], $order['country'], $order['region'], $order['city'], $order['adress'], $order['index'], $order['second_phone'], $order['organization2']);
+			$_SESSION["auto_login"] = $this->data["email"];
+			$order['autor'] = $this->users->getIdOnLogin($this->data["email"]);
+			$result = $this->orders->addOrder($order);
+			if ($result){
+				$_SESSION['order']=$this->orders->getLastId();
+				$this->registry['email']->orderReg($_SESSION["auto_login"], $_SESSION["auto_pass"], $_SESSION['order'], $order);
+				return $this->returnPageMessege("SUCCRESS_ORDER_AND_REG", $this->registry['adress'].$this->registry['msg_link']);
 			}
+			else{
+				return $this->unknownError($this->registry['adress'].$this->registry['order_link']);
+			}
+		}  
+		// для зарегистрированных продолжаем по старой схеме
+		$result = $this->orders->addOrder($order);
+		if ($result){
+			$_SESSION['order']=$this->orders->getLastId();
+			$this->registry['email']->order($email, $_SESSION['order'], $order);
+			return $this->returnPageMessege("SUCCRESS_ORDER", $this->registry['adress'].$this->registry['msg_link']);
 		}
-		else {
-			$_SESSION['no_capcha']=1;
-			return $this->unknownError($this->registry['adress'].$this->registry['order_link']);
-		}
+		else
+			return $this->unknownError($this->registry['adress'].$this->registry['reg_link']);
 	}
 
 	public function login(){

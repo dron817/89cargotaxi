@@ -1,6 +1,5 @@
 <?php
 
-
 Class Registry Implements ArrayAccess {
     private $vars = array();
 	
@@ -11,7 +10,7 @@ Class Registry Implements ArrayAccess {
 		$this->vars['db_name'] = "a237567_89ct";
 		$this->vars['pswd_secret'] = "_cgt";
 		$this->vars['table_secret'] = "cgt_";
-		$this->vars['adress'] = "http://89cargotaxi.mcdir.ru/"; //TODO 
+		$this->vars['adress'] = "/"; //TODO 
 		$this->vars['logout_link'] = "index.php?logout=1";
 		$this->vars['reg_link'] = "index.php?route=reg";
 		$this->vars['msg_link'] = "index.php?route=msg";
